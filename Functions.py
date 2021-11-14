@@ -20,7 +20,8 @@ def startProgram():
         os.system('cls')
         if studentNumber in studentList.keys():
             input("2차 측정: 식판을 올려놓고, enter를 입력하시오...")
-            matrix = DepthCamera.TakePhoto()
+            print("Loading...")
+            matrix = DepthCamera.TakePhoto(None)
             studentList[studentNumber].saveSecondMatrix(matrix)
             # 부피 계산과정 후 사진 보여주기
             print("Calculated Volume: "+str(studentList[studentNumber].calculateSecondVolume())+'/'+str(studentList[studentNumber].calculateFirstVolume()))
@@ -30,7 +31,8 @@ def startProgram():
         else:
             newStudent = Student(studentNumber)
             input("1차 측정: 식판을 올려놓고, enter를 입력하시오...")
-            matrix = DepthCamera.TakePhoto()
+            print("Loading...")
+            matrix = DepthCamera.TakePhoto(newStudent)
             newStudent.saveFirstMatrix(matrix)
             studentList[studentNumber] = newStudent
 
@@ -40,5 +42,4 @@ def startProgram():
 
 def TakePlatePhoto():
     input("식판을 올려놓은 후, enter를 입력하시오...")
-    Plate_matrix = DepthCamera.TakePhoto()
-    print(Plate_matrix)
+    Plate_matrix = DepthCamera.TakePhoto(None)
