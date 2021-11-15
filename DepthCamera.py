@@ -2,7 +2,6 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import pyrealsense2 as rs
-from PIL import Image
 from Essential_module import *
 from Studentclass import *
 
@@ -13,8 +12,6 @@ def TakePhoto(student):
     cfg = rs.config()
     cfg.enable_stream(rs.stream.depth, 320, 240, rs.format.z16, 30)
     cfg.enable_stream(rs.stream.color, 640,480, rs.format.bgr8,30)
-
-
 
     profile = pipe.start(cfg)
     while True:
@@ -42,9 +39,6 @@ def TakePhoto(student):
     
     
     # 사진 돌리기
-
-
-
     matrix = [[0]*height]*width
     for i in range(width):
         for j in range(height):
