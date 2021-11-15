@@ -2,6 +2,7 @@
 import pyrealsense2 as rs
 import numpy as np
 import cv2
+
 # Configure depth and color streams
 pipeline = rs.pipeline()
 config = rs.config()
@@ -43,7 +44,7 @@ while True:
         continue
     # Convert images to numpy arrays
     depth_image = np.asanyarray(depth_frame.get_data())
-    color_image = np.asanyarray(color_frame.get_data())
+    color_image = np.asanyarray(color_frame.get_data(),dtype=np.uint8)
     # Apply colormap on depth image (image must be converted to 8-bit per pixel first)
     depth_colormap = cv2.applyColorMap(cv2.convertScaleAbs(depth_image, alpha=0.03), cv2.COLORMAP_JET)
     depth_colormap_dim = depth_colormap.shape
@@ -55,12 +56,18 @@ while True:
     else:
         images = np.hstack((color_image, depth_colormap))
     
-    imggray=cv2.cvtColor(images,cv2.COLOR_BAYER_BG2GRAY)
-    # corners=cv2.cornerHarris(imggray,2,3,0.04)
-    # cv2.figure(figsize=(12,6))
-    # cv2.imshow(corners,cmap='gray')
+
+    
+    imggray=cv2.cvtColor(color_image,cv2.COLOR_BGR2GRAY)
+    
+
+    imggray = np.float32(imggray)
+    corners=cv2.cornerHarris(imggray,2,3,0.04)
+    corners=cv2.dilate(corners,None)
+    color_image[corners>0.01*corners.max()]=[0,0,255]
+    cv2.imshow('corner',color_image)
     
     # Show images
-    cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
-    cv2.imshow('RealSense', color_image)
+    # cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
+    # cv2.imshow('RealSense', imggray)
     cv2.waitKey(0)
