@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import pyrealsense2 as rs
+from PIL import Image
 from Essential_module import *
 from Studentclass import *
 
@@ -39,8 +40,10 @@ def TakePhoto(student):
     pipe.stop()
     print('Frame Captured')
     
-
+    
     # 사진 돌리기
+
+
 
     matrix = [[0]*height]*width
     for i in range(width):
