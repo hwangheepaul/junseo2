@@ -38,8 +38,8 @@ def startProgram():
 
 
 
-
-
 def TakePlatePhoto():
     input("식판을 올려놓은 후, enter를 입력하시오...")
+    print("Loading...")
     Plate_matrix = DepthCamera.TakePhoto(None)
+
